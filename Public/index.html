@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="spedrosousa">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js'></script>
+	<script src="Controllers/controller.js"></script>
+	<script src="Frameworks/angular-chart.min.js"></script>
+	<link rel="stylesheet" href="css/style.css" />
+	
+	<title>Forecast App</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="css/full-width-pics.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container header-style">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Forecast App</a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="#forecastDiv">Forecast</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <!-- Full Width Image Header with Logo -->
+    <!-- Image backgrounds are set within the full-width-pics.css file. -->
+    <header class="image-bg-fluid-height">
+    </header>
+
+    <!-- Content Section -->
+    <section>
+        <div class="container" id='forecastDiv'  ng-app="myApp" ng-controller='AppCtrl'>
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1>Weather Forecast</h1>
+						<div class="panel-group" id="accordion">
+						  <div class="panel panel-default" ng-repeat="city in arrCities" >
+							<div class="panel-heading collapsed" aria-expanded='false'data-toggle="collapse" data-parent="#accordion"
+							href="#collapse_{{city.id}}" ng-click="fnGetCompleteForecast(city.id)" >
+								<h2 class="panel-title" ng-click="fnGetCompleteForecast(city.id)">
+									{{city.name}}
+								</h2>
+								<h3 class="panel-title">
+									 {{city.weather.temp}} &deg; C
+								</h3>
+								<h3 class="panel-title">
+									 {{city.weather.main}}
+								</h3>
+								<div class="row">
+									<div class='col-xs-4 col-md-1'>
+										<img src='http://openweathermap.org/img/w/{{city.weather.icon}}.png' alt='Icon depicting current weather.'>
+									</div>
+									<div class='col-md-4'>
+										Current Weather: {{city.weather.description}}
+									</div>
+									<div class='col-md-4'>
+										Average Temperature: {{city.weather.temp}} &deg; C
+									</div>
+									<div class='col-md-3'>
+										Wind Speed:  {{city.weather.windspd}} KM/h 
+									</div>
+								</div>
+							</div>
+							<div id="collapse_{{city.id}}" class="panel-collapse collapse in">
+							  <div class="panel-body">
+									<div class="row ">
+										<canvas id="myChart" ng-style="chart" class="chart chart-line char-style " chart-data="data"
+											chart-labels="labels" chart-series="series" chart-options="options"
+											chart-dataset-override="datasetOverride" chart-click="onClick">
+										</canvas>
+									</div>
+									<div class="row ">
+										<p class='text-center'>Next Hours Forecast</p>
+									</div>
+									<div class="row ">		
+											<div class='col-xs-3 col-md-1'>
+												
+												<p>Day<p>
+												<p>{{forecastComplete[0].day}}<p>
+											</div>
+											<div class='col-xs-3 col-md-1'ng-repeat="forecast in forecastComplete">						
+												<img src='http://openweathermap.org/img/w/{{forecast.icon}}.png' alt='Icon depicting current weather.'>
+												<p>{{forecast.main}}<p>
+												<p>{{forecast.time}}<p>
+											</div>
+									</div>
+								
+							  </div>
+							</div>
+						  </div>
+						</div>
+				</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Fixed Height Image Aside -->
+    <!-- Image backgrounds are set within the full-width-pics.css file. -->
+    <aside class="image-bg-fixed-height"></aside>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <p>Copyright &copy; Pedro Sousa 2017</p>
+                </div>
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.container -->
+    </footer>
+	<script>
+		$('.collapse').collapse("hide");
+	</script>
+</body>
+
+</html>

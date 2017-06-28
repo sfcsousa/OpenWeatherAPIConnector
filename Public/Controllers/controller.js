@@ -21,9 +21,9 @@ app.controller('AppCtrl',['$scope','$http',function($scope,$http){
 			weather.temp_max = response.main.temp_max;
 			weather.temp    = response.main.temp;
 			weather.windspd = response.wind.speed;
-			console.log(weather);	
+				
 		},function(error){
-			console.log('Error');
+			console.log(error);
 		});			
 	  
 	  return weather
@@ -61,7 +61,6 @@ app.controller('AppCtrl',['$scope','$http',function($scope,$http){
 	  
 		$http.get(openWeatherUrl+"/forecast?id="+id+"&units=metric&appid="+openWeatherId).then(function(response){
 			response =  response.data;
-			console.log(response.list);
 			var completeFore = {labels:[],
 								data:[],
 								weather:[]}; 
@@ -109,7 +108,7 @@ app.controller('AppCtrl',['$scope','$http',function($scope,$http){
 				"height":"390px"
 			  };
 		},function(error){
-			console.log('Error');
+			console.log(error);
 		});			
   };
     

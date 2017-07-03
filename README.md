@@ -1,9 +1,7 @@
-################################################################################
-Forecast App
+#Forecast 
 @author: pedromuriel.sousa@gmail.com
-####################################################
 
-Steps:
+#Steps:
 	1st - Development of the forecast widget. How fit the cities, graph and detailed forecast.
 	2nd - Understantd the openWeatherAPI interface.
 	3rd - Preperation of controller interface and objects.
@@ -13,8 +11,7 @@ Steps:
 	7th - Show hour temperature and referent icon.
 	8th - Find a Custom Full width pics template to fit the forecast widget
 	
-####################################
-Features:
+#Features:
 	- Mobile First
 	- Full resposive
 	- Interactive Menu
